@@ -6,11 +6,27 @@ import { NewPost } from "../components/NewPost";
 import { useQuery } from "../hooks/useQuery";
 import AlertDialog from "../components/AlertDialog";
 import { useAuth } from "../context/AuthContext/AuthProvider";
+import { Pagination } from "../components/Pagination";
+import { useEffect, useState } from "react";
+import { ScrollToTop } from "../components/ScrollToTop";
+import { SpinnerIcon } from "../components/icons/SpinnerIcon";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Home = () => {
-  const { data: posts, loading } = useQuery(apiUrl);
+  const [offset, setOffset] = useState(0);
+  const {
+    data: posts,
+    loading,
+    refetch,
+  } = useQuery(apiUrl, {
+    offset,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [offset]);
+
   const { logout } = useAuth();
 
   const handleLogout = () => {
@@ -25,14 +41,21 @@ export const Home = () => {
           Logout
         </Button>
       </Header>
-      <Container>
-        <AlertDialog title="Are you sure you want to delete this item?" />
-        <NewPost />
+      <Container style={{ marginBottom: "4rem" }}>
+        <NewPost refetch={refetch} />
         {loading ? (
-          <div>Loading...</div>
+          <SpinnerIcon />
         ) : (
           posts?.results.map((post) => <Post key={post.id} post={post} />)
         )}
+        {posts && (
+          <Pagination
+            setOffset={setOffset}
+            totalItems={posts.count}
+            itemsPerPage={10}
+          />
+        )}
+        <ScrollToTop />
       </Container>
     </RequiredAuth>
   );

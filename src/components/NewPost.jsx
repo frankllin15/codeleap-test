@@ -5,6 +5,7 @@ import { createPost } from "../actions/postActions";
 import { Button, Title } from "./Styles";
 import { useMutation } from "../hooks/useMutation";
 import { PostForm } from "./PostForm";
+import { SpinnerIcon } from "./icons/SpinnerIcon";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,15 +16,22 @@ const Wrapper = styled.div`
   padding: 28px 32px 14px 32px;
 `;
 
-export const NewPost = () => {
+export const NewPost = ({ refetch }) => {
   const { user } = useAuth();
-  const [postForm, setPostForm] = useState({ title: "", content: "" });
+  const defaultPostForm = {
+    title: "",
+    content: "",
+  };
+  const [postForm, setPostForm] = useState(defaultPostForm);
 
-  const [createPostMutation, { data, loading }] = useMutation(createPost, {
-    variables: {
-      post: { ...postForm, username: user.name },
-    },
-  });
+  const [createPostMutation, { data, loading, reset }] = useMutation(
+    createPost,
+    {
+      variables: {
+        post: { ...postForm, username: user.name },
+      },
+    }
+  );
 
   const handleChange = (e) => {
     setPostForm({
@@ -39,7 +47,9 @@ export const NewPost = () => {
 
   useEffect(() => {
     if (data) {
-      window.location.reload(false);
+      refetch();
+      reset();
+      setPostForm(defaultPostForm);
     }
   }, [data]);
 
@@ -47,13 +57,17 @@ export const NewPost = () => {
     <Wrapper style={{ marginBottom: "35px" }}>
       <Title>What’s on your mind?</Title>
       <PostForm postForm={postForm} onChange={handleChange} />
-      <Button
-        onClick={handleSubmit}
-        disabled={postForm.content == "" || postForm.title == ""}
-        color="white"
-      >
-        Create
-      </Button>
+      {loading ? (
+        <SpinnerIcon style={{ alignSelf: "flex-end" }} />
+      ) : (
+        <Button
+          onClick={handleSubmit}
+          disabled={postForm.content == "" || postForm.title == ""}
+          color="white"
+        >
+          Create
+        </Button>
+      )}
     </Wrapper>
   );
 };

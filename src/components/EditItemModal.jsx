@@ -17,7 +17,6 @@ export const EditItemModal = ({ post }) => {
       id: post.id,
     },
   });
-  console.log(postForm);
   const handleChange = (e) => {
     setPostForm({
       ...postForm,
@@ -44,6 +43,7 @@ export const EditItemModal = ({ post }) => {
       buttons={{
         action: {
           onClick: handleSubmit,
+          loading,
         },
       }}
     >

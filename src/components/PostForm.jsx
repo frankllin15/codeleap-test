@@ -8,7 +8,6 @@ const Form = styled.form`
 `;
 
 export const PostForm = ({ onChange, onSubmit, postForm, ...props }) => {
-  console.log("postForm", postForm);
   return (
     <Form style={{ width: "100%" }} {...props} onSubmit={(e) => onSubmit(e)}>
       {/* <Wrapper> */}

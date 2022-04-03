@@ -3,6 +3,7 @@ import { styled, keyframes } from "@stitches/react";
 // import { violet, blackA, red, mauve } from "@radix-ui/colors";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import { Button } from "./Styles";
+import { SpinnerIcon } from "./icons/SpinnerIcon";
 
 const overlayShow = keyframes({
   "0%": { opacity: 0 },
@@ -119,13 +120,17 @@ const AlertDialogDefatult = ({
           </Button>
         </AlertDialogCancel>
         <AlertDialogAction asChild>
-          <Button
-            onClick={buttons.action.onClick}
-            theme={{ variant: buttons.action?.variant }}
-            style={{ margin: "0px 8px" }}
-          >
-            Ok
-          </Button>
+          {buttons.action.loading ? (
+            <SpinnerIcon />
+          ) : (
+            <Button
+              onClick={buttons.action.onClick}
+              theme={{ variant: buttons.action?.variant }}
+              style={{ margin: "0px 8px" }}
+            >
+              Ok
+            </Button>
+          )}
         </AlertDialogAction>
       </Flex>
     </AlertDialogContent>

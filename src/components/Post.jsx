@@ -21,7 +21,7 @@ const PostContainer = styled.div`
 
 const Article = styled.article`
   width: 100%;
-  padding: 0 30px;
+  padding: 0 30px 12px 30px;
   pre {
     font-size: 1.13rem;
     white-space: pre-wrap;

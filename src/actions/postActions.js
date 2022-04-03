@@ -1,7 +1,6 @@
 const apiURL = import.meta.env.VITE_API_URL;
 
 export const createPost = (variables) => {
-  console.log("createPost", variables.post);
   return fetch(`${apiURL}/`, {
     method: "POST",
     headers: {

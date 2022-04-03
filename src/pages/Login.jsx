@@ -12,12 +12,16 @@ import {
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
   width: 500px;
+  max-width: 100%;
   flex-direction: column;
   align-items: flex-start;
   border: solid 1px #cccc;
   padding: 28px 32px 14px 32px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Login = () => {

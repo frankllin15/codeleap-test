@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useQuery(url, options = {}) {
+export function useQuery(url, variables = {}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,7 +9,11 @@ export function useQuery(url, options = {}) {
   const fetchData = async () => {
     setLoading(true);
 
-    fetch(url, options)
+    fetch(
+      `${url}${
+        variables.offset > 0 ? "?" + new URLSearchParams(variables) : ""
+      }`
+    )
       .then((response) => {
         response.json().then((data) => {
           if (isMounted) {

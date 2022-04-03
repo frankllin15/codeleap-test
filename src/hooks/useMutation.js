@@ -6,8 +6,12 @@ export const useMutation = (mutation, { variables = {} }) => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  console.log("useMutation", variables);
-  console.log(typeof mutation);
+  function reset() {
+    setData(null);
+    setLoading(false);
+    setError(null);
+    setSuccess(false);
+  }
 
   function mutationFn() {
     setLoading(true);
@@ -27,5 +31,5 @@ export const useMutation = (mutation, { variables = {} }) => {
       });
   }
 
-  return [mutationFn, { data, loading, error, success }];
+  return [mutationFn, { data, loading, error, success, reset }];
 };
