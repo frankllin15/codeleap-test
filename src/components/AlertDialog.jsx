@@ -1,9 +1,6 @@
 import React from "react";
 import { styled, keyframes } from "@stitches/react";
-// import { violet, blackA, red, mauve } from "@radix-ui/colors";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
-import { Button } from "./Styles";
-import { SpinnerIcon } from "./icons/SpinnerIcon";
 
 const overlayShow = keyframes({
   "0%": { opacity: 0 },
@@ -78,63 +75,4 @@ export const AlertDialogTitle = StyledTitle;
 export const AlertDialogDescription = StyledDescription;
 export const AlertDialogAction = AlertDialogPrimitive.Action;
 export const AlertDialogCancel = AlertDialogPrimitive.Cancel;
-
-// Your app...
-const Flex = styled("div", { display: "flex" });
-
-const defaultOptionButtons = {
-  action: {
-    show: true,
-    variant: "filled",
-    label: "Ok",
-    onClick: () => {},
-  },
-  cancel: {
-    show: true,
-    variant: "filled",
-    label: "Cancel",
-    onClick: () => {},
-  },
-};
-
-const AlertDialogDefatult = ({
-  title,
-  children,
-  alertTrigger,
-  onConfirm,
-  buttons = defaultOptionButtons,
-}) => (
-  <AlertDialog>
-    <AlertDialogTrigger asChild>{alertTrigger}</AlertDialogTrigger>
-    <AlertDialogContent>
-      <AlertDialogTitle>{title}</AlertDialogTitle>
-      {children}
-
-      <Flex css={{ justifyContent: "flex-end" }}>
-        <AlertDialogCancel asChild>
-          <Button
-            theme={{ variant: buttons.cancel?.variant }}
-            style={{ margin: "0px 8px" }}
-          >
-            Cancel
-          </Button>
-        </AlertDialogCancel>
-        <AlertDialogAction asChild>
-          {buttons.action.loading ? (
-            <SpinnerIcon />
-          ) : (
-            <Button
-              onClick={buttons.action.onClick}
-              theme={{ variant: buttons.action?.variant }}
-              style={{ margin: "0px 8px" }}
-            >
-              Ok
-            </Button>
-          )}
-        </AlertDialogAction>
-      </Flex>
-    </AlertDialogContent>
-  </AlertDialog>
-);
-
-export default AlertDialogDefatult;
+export const ButtonsWrapper = styled("div", { display: "flex" });
