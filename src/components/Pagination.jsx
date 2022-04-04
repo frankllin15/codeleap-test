@@ -36,7 +36,9 @@ export const Pagination = ({ setOffset, itemsPerPage = 10, totalItems }) => {
   // const [offset, setOffset] = useState(0);
   // const itemsPerPage = 10;
   const totalPages = Math.floor(totalItems / itemsPerPage);
-
+  const scrollTop = () => {
+    window.scrollTo({ top: 200, behavior: "smooth" });
+  };
   const handleClick = (e) => {
     if (currentPage + e > totalPages) {
       setCurrentPage(totalPages);
@@ -44,6 +46,7 @@ export const Pagination = ({ setOffset, itemsPerPage = 10, totalItems }) => {
       setCurrentPage(1);
     } else {
       setCurrentPage(currentPage + e);
+      scrollTop();
     }
   };
 
@@ -62,8 +65,8 @@ export const Pagination = ({ setOffset, itemsPerPage = 10, totalItems }) => {
         {currentPage} of {totalPages}
       </p>
       <Button onClick={() => handleClick(1)}>
-        <ChevronRight />
         <span>Next</span>
+        <ChevronRight />
       </Button>
     </Wrapper>
   );
