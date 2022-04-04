@@ -3,17 +3,20 @@ import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
 import { AuthProvider } from "./context/AuthContext/AuthProvider";
 import { NotFound } from "./pages/NotFound";
+import { PostProvider } from "./context/PostContext/PostProvider";
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
+        <PostProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PostProvider>
       </AuthProvider>
     </div>
   );
