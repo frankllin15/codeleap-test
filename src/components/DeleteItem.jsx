@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
-import { createPost, deletePostMutation } from "../actions/postActions";
-import { useAuth } from "../context/AuthContext/AuthProvider";
+import React, { useEffect, useState } from "react";
+import { deletePostMutation } from "../actions/postActions";
+import { usePost } from "../context/PostContext/PostProvider";
 import { useMutation } from "../hooks/useMutation";
-import AlertDialog, { AlertDialogCancel } from "./AlertDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogTrigger,
+  ButtonsWrapper,
+} from "./AlertDialog";
 import { TrashIcon } from "./icons/TashIcon";
-import { PostForm } from "./PostForm";
 import { Button, Title } from "./Styles";
 
 export const DeleteItem = ({ postId }) => {
-  const { user } = useAuth();
-  const [postForm, setPostForm] = useState({ title: "", content: "" });
-
+  const [open, setOpen] = useState(false);
+  const { refetch } = usePost();
   const [deletePost, { success, loading }] = useMutation(deletePostMutation, {
     variables: {
       id: postId,
@@ -23,24 +28,46 @@ export const DeleteItem = ({ postId }) => {
   };
 
   useEffect(() => {
-    if (success) window.location.reload(false);
+    if (success) {
+      refetch();
+      handleToogle();
+    }
   }, [success]);
 
+  const handleToogle = () => {
+    setOpen(!open);
+  };
+
   return (
-    <AlertDialog
-      title={"Are you sure you want to delete this item?"}
-      buttons={{
-        action: {
-          variant: "outline",
-          onClick: handleDelete,
-        },
-        cancel: {
-          variant: "outline",
-        },
-      }}
-      alertTrigger={
-        <TrashIcon style={{ marginLeft: "33px" }} width="30" height="30" />
-      }
-    />
+    <>
+      <AlertDialog open={open} onOpenChange={handleToogle}>
+        <AlertDialogTrigger asChild>
+          <TrashIcon style={{ marginLeft: "33px" }} width="30" height="30" />
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <Title>Are you sure you want to delete this item?</Title>
+
+          <ButtonsWrapper css={{ justifyContent: "flex-end" }}>
+            <AlertDialogCancel asChild>
+              <Button
+                theme={{ variant: "outline" }}
+                style={{ margin: "0px 8px" }}
+              >
+                Cancel
+              </Button>
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <Button
+                theme={{ variant: "outline" }}
+                onClick={handleDelete}
+                style={{ margin: "0px 8px" }}
+              >
+                Ok
+              </Button>
+            </AlertDialogAction>
+          </ButtonsWrapper>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
