@@ -6,6 +6,7 @@ import { Button, Title } from "./Styles";
 import { useMutation } from "../hooks/useMutation";
 import { PostForm } from "./PostForm";
 import { SpinnerIcon } from "./icons/SpinnerIcon";
+import { usePost } from "../context/PostContext/PostProvider";
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,14 +17,14 @@ const Wrapper = styled.div`
   padding: 28px 32px 14px 32px;
 `;
 
-export const NewPost = ({ refetch }) => {
+export const NewPost = () => {
   const { user } = useAuth();
   const defaultPostForm = {
     title: "",
     content: "",
   };
   const [postForm, setPostForm] = useState(defaultPostForm);
-
+  const { refetch } = usePost();
   const [createPostMutation, { data, loading, reset }] = useMutation(
     createPost,
     {

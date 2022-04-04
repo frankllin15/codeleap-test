@@ -3,29 +3,14 @@ import { Post } from "../components/Post";
 import { RequiredAuth } from "../components/RequiredAuth";
 import { Header, Title } from "../components/Styles";
 import { NewPost } from "../components/NewPost";
-import { useQuery } from "../hooks/useQuery";
-import AlertDialog from "../components/AlertDialog";
 import { useAuth } from "../context/AuthContext/AuthProvider";
 import { Pagination } from "../components/Pagination";
-import { useEffect, useState } from "react";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { SpinnerIcon } from "../components/icons/SpinnerIcon";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { usePost } from "../context/PostContext/PostProvider";
 
 export const Home = () => {
-  const [offset, setOffset] = useState(0);
-  const {
-    data: posts,
-    loading,
-    refetch,
-  } = useQuery(apiUrl, {
-    offset,
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [offset]);
+  const { posts, offset, setOffset, refetch, loading } = usePost();
 
   const { logout } = useAuth();
 
@@ -42,7 +27,7 @@ export const Home = () => {
         </Button>
       </Header>
       <Container style={{ marginBottom: "4rem" }}>
-        <NewPost refetch={refetch} />
+        <NewPost />
         {loading ? (
           <SpinnerIcon />
         ) : (
