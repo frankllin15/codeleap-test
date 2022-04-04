@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useQuery(url, variables = {}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isMounted, setIsMounted] = useState(true);
+  const mountedRef = useRef(true);
 
   const fetchData = async () => {
     setLoading(true);
@@ -16,7 +17,7 @@ export function useQuery(url, variables = {}) {
     )
       .then((response) => {
         response.json().then((data) => {
-          if (isMounted) {
+          if (mountedRef.current) {
             setData(data);
             setLoading(false);
           }
@@ -29,17 +30,20 @@ export function useQuery(url, variables = {}) {
   };
 
   useEffect(() => {
-    setIsMounted(true);
+    // setIsMounted(true);
 
     fetchData();
 
     return () => {
-      setIsMounted(false);
+      // setIsMounted(false);
+      mountedRef.current = false;
     };
-  }, [url]);
+  }, []);
 
   const refetch = () => {
-    fetchData();
+    if (mountedRef.current) {
+      fetchData();
+    }
   };
 
   return { data, loading, error, refetch };
