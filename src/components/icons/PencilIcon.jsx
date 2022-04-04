@@ -1,5 +1,8 @@
-export const PencilIcon = (props) => (
+import React from "react";
+
+export const PencilIcon = React.forwardRef((props, ref) => (
   <svg
+    ref={ref}
     {...props}
     width="30"
     height="30"
@@ -17,4 +20,4 @@ export const PencilIcon = (props) => (
       fill="white"
     />
   </svg>
-);
+));

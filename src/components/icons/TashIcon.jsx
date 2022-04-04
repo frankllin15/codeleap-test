@@ -1,5 +1,8 @@
-export const TrashIcon = (props) => (
+import React from "react";
+
+export const TrashIcon = React.forwardRef((props, ref) => (
   <svg
+    ref={ref}
     {...props}
     viewBox="0 0 18 24"
     fill="none"
@@ -11,4 +14,4 @@ export const TrashIcon = (props) => (
       fill="white"
     />
   </svg>
-);
+));
