@@ -4,7 +4,6 @@ export function useQuery(url, variables = {}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isMounted, setIsMounted] = useState(true);
   const mountedRef = useRef(true);
 
   const fetchData = async () => {
