@@ -7,7 +7,7 @@ const ScrollWrapper = styled.div`
   bottom: 2rem;
   right: 2rem;
   z-index: 1000;
-  display: flex;
+  display: ${({ showScroll }) => (showScroll ? "flex" : "none")};
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -25,13 +25,10 @@ const ScrollWrapper = styled.div`
 
 export const ScrollToTop = () => {
   const [showScroll, setShowScroll] = useState(false);
-
   const checkScrollTop = () => {
-    if (!showScroll && window.pageYOffset > 400) {
-      setShowScroll(true);
-    } else if (showScroll && window.pageYOffset <= 400) {
-      setShowScroll(false);
-    }
+    const { pageTop, height } = window.visualViewport;
+    if (pageTop > height && pageTop > 933) setShowScroll(true);
+    else setShowScroll(false);
   };
 
   const scrollTop = () => {
