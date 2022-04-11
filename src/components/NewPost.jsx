@@ -28,9 +28,7 @@ export const NewPost = () => {
   const [createPostMutation, { data, loading, reset }] = useMutation(
     createPost,
     {
-      variables: {
-        post: { ...postForm, username: user.name },
-      },
+      post: { ...postForm, username: user.name },
     }
   );
 

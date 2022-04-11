@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useMutation = (mutation, { variables = {} }) => {
+export const useMutation = (mutation, variables = {}) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

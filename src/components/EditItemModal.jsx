@@ -23,10 +23,8 @@ export const EditItemModal = ({ post }) => {
   const { refetch } = usePost();
 
   const [updatePost, { success, loading }] = useMutation(updatePostMutation, {
-    variables: {
-      post: { title: postForm.title, content: postForm.content },
-      id: post.id,
-    },
+    post: { title: postForm.title, content: postForm.content },
+    id: post.id,
   });
 
   const handleChange = (e) => {

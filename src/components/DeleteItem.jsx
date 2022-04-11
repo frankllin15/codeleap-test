@@ -17,9 +17,7 @@ export const DeleteItem = ({ postId }) => {
   const [open, setOpen] = useState(false);
   const { refetch } = usePost();
   const [deletePost, { success, loading }] = useMutation(deletePostMutation, {
-    variables: {
-      id: postId,
-    },
+    id: postId,
   });
 
   const handleDelete = async (e) => {
