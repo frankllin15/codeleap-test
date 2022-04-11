@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { createPost, updatePostMutation } from "../actions/postActions";
-import { useAuth } from "../context/AuthContext/AuthProvider";
+import { updatePostMutation } from "../actions/postActions";
 import { useMutation } from "../hooks/useMutation";
 import { PencilIcon } from "./icons/PencilIcon";
 import { PostForm } from "./PostForm";
@@ -11,7 +10,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogTitle,
   AlertDialogTrigger,
 } from "./AlertDialog";
 import { usePost } from "../context/PostContext/PostProvider";

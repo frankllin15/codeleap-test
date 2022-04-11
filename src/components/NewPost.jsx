@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../context/AuthContext/AuthProvider";
-import { createPost } from "../actions/postActions";
+import { createPostMutation } from "../actions/postActions";
 import { Button, Title } from "./Styles";
 import { useMutation } from "../hooks/useMutation";
 import { PostForm } from "./PostForm";
@@ -25,8 +25,8 @@ export const NewPost = () => {
   };
   const [postForm, setPostForm] = useState(defaultPostForm);
   const { refetch } = usePost();
-  const [createPostMutation, { data, loading, reset }] = useMutation(
-    createPost,
+  const [createPost, { data, loading, reset }] = useMutation(
+    createPostMutation,
     {
       post: { ...postForm, username: user.name },
     }
@@ -41,7 +41,7 @@ export const NewPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createPostMutation();
+    createPost();
   };
 
   useEffect(() => {

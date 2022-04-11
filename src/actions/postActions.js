@@ -10,7 +10,7 @@ export const getPostsQuery = (variables) => {
   );
 };
 
-export const createPost = (variables) => {
+export const createPostMutation = (variables) => {
   return fetch(`${apiURL}/`, {
     method: "POST",
     headers: {
