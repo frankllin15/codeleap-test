@@ -22,7 +22,7 @@ export const EditItemModal = ({ post }) => {
   const [postForm, setPostForm] = useState({ ...post });
   const { refetch } = usePost();
 
-  const [updatePost, { success, loading }] = useMutation(updatePostMutation, {
+  const [updatePost, { success }] = useMutation(updatePostMutation, {
     post: { title: postForm.title, content: postForm.content },
     id: post.id,
   });
