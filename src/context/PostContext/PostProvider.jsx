@@ -1,5 +1,6 @@
 import React from "react";
 import { createContext, useEffect, useState } from "react";
+import { getPostsQuery } from "../../actions/postActions";
 import { useQuery } from "../../hooks/useQuery";
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -12,8 +13,10 @@ export const PostProvider = ({ children }) => {
     data: posts,
     loading,
     refetch,
-  } = useQuery(apiUrl, {
-    offset,
+  } = useQuery(getPostsQuery, {
+    params: {
+      offset,
+    },
   });
 
   useEffect(() => {

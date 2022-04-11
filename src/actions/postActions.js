@@ -1,5 +1,15 @@
 const apiURL = import.meta.env.VITE_API_URL;
 
+export const getPostsQuery = (variables) => {
+  return fetch(
+    `${apiURL}${
+      variables.params.offset > 0
+        ? "?" + new URLSearchParams(variables.params)
+        : ""
+    }`
+  );
+};
+
 export const createPost = (variables) => {
   return fetch(`${apiURL}/`, {
     method: "POST",
@@ -8,17 +18,6 @@ export const createPost = (variables) => {
     },
     body: JSON.stringify(variables.post),
   });
-};
-
-export const getPosts = async () => {
-  const resp = await fetch(`${apiURL}`);
-  const json = await resp.json();
-  const posts =
-    json.results?.sort((a, b) => {
-      return new Date(b.created_datetime) - new Date(a.created_datetime);
-    }) || [];
-
-  return posts;
 };
 
 export const deletePostMutation = (variables) => {

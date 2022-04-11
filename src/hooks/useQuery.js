@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export function useQuery(url, variables = {}) {
+export function useQuery(query, variables = {}) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,11 +9,7 @@ export function useQuery(url, variables = {}) {
   const fetchData = async () => {
     setLoading(true);
 
-    fetch(
-      `${url}${
-        variables.offset > 0 ? "?" + new URLSearchParams(variables) : ""
-      }`
-    )
+    query(variables)
       .then((response) => {
         response.json().then((data) => {
           if (mountedRef.current) {
